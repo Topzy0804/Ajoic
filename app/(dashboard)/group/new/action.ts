@@ -57,5 +57,5 @@ export async function createGroup(
       return { error: 'Something went wrong creating the group. Please try again.' };
     }
     
-    redirect(`/dashboard/group/${newGroupId}`);
+    redirect(`/group/${newGroupId}`);
   }

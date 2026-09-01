@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { label: 'Dashboard', href: '/dashboard' },
   { label: 'Wallet', href: '/wallet' },
   { label: 'Groups', href: '/group' },
-  { label: 'Notifications', href: '/notifications' },
+  { label: 'Notifications', href: '/notification' },
   { label: 'Profile', href: '/profile' },
 ];
 

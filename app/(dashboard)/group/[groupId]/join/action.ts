@@ -5,6 +5,7 @@ import { getAuthedUser } from "@/lib/get-user";
 import { db } from "@/lib/db";
 import { groups, groupMembers } from "@/lib/db/schema";
 
+
 type JoinGroupResult = { error: string } | { success: true };
 
 const MAX_POSITION_RETRIES = 3;

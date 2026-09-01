@@ -15,6 +15,13 @@
       "when": 1786979835354,
       "tag": "0001_opposite_iceman",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788269795367,
+      "tag": "0002_next_spirit",
+      "breakpoints": true
     }
   ]
 }

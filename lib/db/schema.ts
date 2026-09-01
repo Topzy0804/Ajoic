@@ -41,6 +41,15 @@ export const walletTxTypeEnum = pgEnum("wallet_tx_type", [
   "payout",
 ]);
 export const walletTxStatusEnum = pgEnum("wallet_tx_status", ["pending", "completed", "failed"]);
+export const notificationTypeEnum = pgEnum("notification_type", [
+  "cycle_started",
+  "receipt_submitted",
+  "receipt_confirmed",
+  "receipt_rejected",
+  "member_joined",
+  "role_changed",
+  "contribution_due",
+])
 
 // users
 
@@ -157,18 +166,37 @@ export const walletTransactions = pgTable("wallet_transactions", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+// Notifications
+
+export const notifications = pgTable("notifications", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  groupId: uuid("group_id").references(() => groups.id, {
+    onDelete: "cascade"
+  }),
+  type: notificationTypeEnum("type").notNull(),
+  title: text("title").notNull(),
+  body: text("body"),
+  read: boolean("read").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 // relations
 
 export const usersRelations = relations(users, ({ many }) => ({
   groupMemberships: many(groupMembers),
   walletTransactions: many(walletTransactions),
   ownedGroups: many(groups),
+  notifications: many(notifications),
 }));
 
 export const groupsRelations = relations(groups, ({ one, many }) => ({
   owner: one(users, { fields: [groups.ownerId], references: [users.id] }),
   members: many(groupMembers),
   cycles: many(cycles),
+  notifications: many(notifications),
 }));
 
 export const groupMembersRelations = relations(groupMembers, ({ one, many }) => ({
@@ -190,4 +218,9 @@ export const contributionsRelations = relations(contributions, ({ one }) => ({
 
 export const walletTransactionsRelations = relations(walletTransactions, ({ one }) => ({
   user: one(users, { fields: [walletTransactions.userId], references: [users.id] }),
+}));
+
+export const notificationsRelations = relations(notifications, ({ one }) => ({
+  user: one(users, { fields: [notifications.userId], references: [users.id] }),
+  group: one(groups, { fields: [notifications.groupId], references: [groups.id] }),
 }));
