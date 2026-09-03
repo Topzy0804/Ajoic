@@ -14,7 +14,7 @@ function addDays(date: Date, days: number): Date {
 
 export function getCycleIntervalDays(group: {
   frequency: "daily" | "weekly" | "monthly" | "custom";
-  customIntervalDays: number | null;
+  customFrequencyDays: number | null;
 }): number {
   switch (group.frequency) {
     case "daily":
@@ -24,7 +24,7 @@ export function getCycleIntervalDays(group: {
     case "monthly":
       return 30;
     case "custom":
-      return group.customIntervalDays ?? 30;
+      return group.customFrequencyDays ?? 30;
   }
 }
 

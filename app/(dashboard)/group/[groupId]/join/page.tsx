@@ -32,6 +32,7 @@ export default async function JoinGroupPage({
 
     const isFull = memberCount >= group.memberCap;
 
+
     return (
       <div className="mx-auto max-w-md">
       <div className="rounded-xl border border-neutral-200 bg-white p-6 text-center">
