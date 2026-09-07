@@ -12,6 +12,7 @@ type NotificationItem = {
   read: boolean;
   createdAt: string; 
   groupId: string | null;
+  groupName: string | null;
 };
 
 const TYPE_LINK: Record<string, (groupId: string) => string> = {
@@ -82,6 +83,11 @@ export function NotificationList({
                 >
                   {n.title}
                 </p>
+                {n.groupName && (
+                  <span className="text-sm text-neutral-500">
+                    ({n.groupName})
+                  </span>
+                )}
                 {!n.read && (
                   <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-green-600" />
                 )}

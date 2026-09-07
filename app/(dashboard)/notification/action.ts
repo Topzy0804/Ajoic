@@ -26,5 +26,5 @@ export async function markAllNotificationsRead() {
     .set({ read: true })
     .where(and(eq(notifications.userId, authUser.id), eq(notifications.read, false)));
 
-  revalidatePath("/notifications");
+  revalidatePath("/notification");
 }

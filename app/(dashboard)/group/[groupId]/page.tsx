@@ -7,6 +7,7 @@ import { groups, cycles } from "@/lib/db/schema";
 import { formatCurrency, formatFrequency } from "@/lib/utils/format";
 import { InviteLink } from "@/app/(dashboard)/group/invite-link";
 import { StartCycleButton } from "@/components/group/start-cycle-button";
+import { CompleteCycleButton } from "@/components/group/completeCycleButton";
 
 export default async function GroupDetailPage({
   params,
@@ -170,6 +171,13 @@ export default async function GroupDetailPage({
                 Review receipts
               </Link>
             )}
+            {isAdmin && (
+  <CompleteCycleButton
+    groupId={group.id}
+    cycleId={activeCycle.id}
+    allPaid={activeCycle.contributions.every((c) => c.status === "paid")}
+  />
+)}
           </div>
           <ul>
             {activeCycle.contributions.map((c) => (

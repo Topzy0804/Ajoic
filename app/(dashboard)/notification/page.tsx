@@ -11,6 +11,13 @@ export default async function NotificationsPage() {
     where: eq(notifications.userId, authUser.id),
     orderBy: (n, { desc }) => desc(n.createdAt),
     limit: 50,
+    with: {
+      group: {
+        columns: {
+          name: true,
+        },
+      },
+    },
   });
 
   const hasUnread = items.some((n) => !n.read);
@@ -28,6 +35,7 @@ export default async function NotificationsPage() {
             read: n.read,
             createdAt: n.createdAt.toISOString(),
             groupId: n.groupId,
+            groupName: n.group?.name ?? null,
           }))}
           hasUnread={hasUnread}
         />
